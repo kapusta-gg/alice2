@@ -37,8 +37,9 @@ def handle_dialog(res, req):
     if not cities:
         res['response']['text'] = 'Вы не написали название ни одного города!'
     elif len(cities) == 1:
-        res['response']['text'] = 'Этот город в стране - ' + \
-                                  get_country(cities[0])
+        country = get_country(cities[0])
+        print(type(country))
+        res['response']['text'] = f'Этот город в стране - {str(country)}'
     elif len(cities) == 2:
         distance = get_distance(get_coordinates(
             cities[0]), get_coordinates(cities[1]))
@@ -58,4 +59,4 @@ def get_cities(req):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=8000)

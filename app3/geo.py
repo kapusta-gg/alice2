@@ -8,6 +8,7 @@ def get_coordinates(city_name):
         url = "https://geocode-maps.yandex.ru/1.x/"
         # параметры запроса
         params = {
+            "apikey": "40d1649f-0493-4b70-98ba-98533de7710b",
             # город, координаты которого мы ищем
             'geocode': city_name,
             # формат ответа от сервера, в данном случае JSON
@@ -37,14 +38,16 @@ def get_country(city_name):
     try:
         url = "https://geocode-maps.yandex.ru/1.x/"
         params = {
+            "apikey": "40d1649f-0493-4b70-98ba-98533de7710b",
             'geocode': city_name,
             'format': 'json'
         }
         data = requests.get(url, params).json()
         # все отличие тут, мы получаем имя страны
-        return data['response']['GeoObjectCollection']['featureMember'][0][
+        country = data['response']['GeoObjectCollection']['featureMember'][0][
             'GeoObject']['metaDataProperty']['GeocoderMetaData'][
-            'AddressDetails']['Country']['CountryName']
+            'Address']['Components'][0]['name']
+        return country
     except Exception as e:
         return e
 
